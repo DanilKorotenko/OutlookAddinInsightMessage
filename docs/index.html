@@ -19,10 +19,32 @@ function validateMessage(event)
 {
     console.log("Start validation stream");
 
-    mailboxItem.notificationMessages.addAsync('NoSend',
-            { type: 'errorMessage',
-            message: 'Message blocked.' });
-            
+//     mailboxItem.notificationMessages.addAsync('NoSend',
+//             { type: 'errorMessage',
+//             message: 'Message blocked.' });
+
+    const insightMessage = 
+    {
+    	type: Office.MailboxEnums.ItemNotificationMessageType.InsightMessage,
+    	message: "This is an insight notification",
+    	icon: "Icon.80x80",
+      	actions: 
+      	[
+      		{
+          		actionText: "Open insight",
+          		actionType: Office.MailboxEnums.ActionType.ShowTaskPane,
+          		commandId: "msgComposeOpenPaneButton",
+          		contextData: JSON.stringify({a: "aValue", b: "bValue",}),
+      		},
+      	],
+  	};
+
+  	Office.context.mailbox.item.notificationMessages.replaceAsync("messageKey", insightMessage, 
+  		(result) => 
+  		{
+	    	console.log("Added notification: " + JSON.stringify(result));
+  		});
+
     event.completed({ allowEvent: false });
     return;
 }
