@@ -19,21 +19,22 @@ function validateMessage(event)
 {
     console.log("Start validation stream");
 
-    const insightMessage = 
-    {
+	// Define notification.
+	const insightMessage = 
+	{
     	type: Office.MailboxEnums.ItemNotificationMessageType.InsightMessage,
-    	message: "This is an insight notification",
+	    message: "This is an insight notification",
     	icon: "Icon.80x80",
-      	actions: 
-      	[
-      		{
-          		actionText: "Open insight",
-          		actionType: Office.MailboxEnums.ActionType.ShowTaskPane,
-          		commandId: "msgComposeOpenPaneButton",
-          		contextData: JSON.stringify({a: "aValue", b: "bValue",}),
-      		},
-      	],
-  	};
+	    actions: 
+	    [
+	    	{
+    	    	actionText: "Open insight",
+	        	actionType: Office.MailboxEnums.ActionType.ShowTaskPane,
+		        commandId: "msgComposeOpenPaneButton",
+    		    contextData: { a: "aValue", b: "bValue", },
+    		},
+    	],
+	};
 
   	Office.context.mailbox.item.notificationMessages.replaceAsync("messageKey", insightMessage, 
   		(result) => 
